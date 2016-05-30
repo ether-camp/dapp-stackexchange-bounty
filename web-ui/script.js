@@ -1,10 +1,19 @@
-
-    var node_list = {
+$(function() {
+    var sandbox = true;
+    var sandboxId = 'f36a7174ec';
+    
+    var defaultNode = 'testnet161';
+    var nodeList = {
       'mainnet' : 'http://eth-node-1.oraclize.it',
       'morden' : 'http://eth-testnet-node-1.oraclize.it',
       'testnet161' : 'http://eth-testnet161-node-1.oraclize.it/',
       'local' : 'http://localhost:8545'
     };
+
+    if (sandbox) {
+        defaultNode = 'sandbox';
+        nodeList['sandbox'] = '//' + window.location.hostname + ':8555/sandbox/' + sandboxId;
+    }
 
     var ABI = [{"constant":false,"inputs":[{"name":"queryID","type":"bytes32"},{"name":"result","type":"string"}],"name":"__callback","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"questions","outputs":[{"name":"contractAddress","type":"address"},{"name":"site","type":"string"},{"name":"questionID","type":"uint256"},{"name":"winnerAddress","type":"address"},{"name":"winnerID","type":"uint256"},{"name":"acceptedAnswerID","type":"uint256"},{"name":"updateDelay","type":"uint256"},{"name":"expiryDate","type":"uint256"},{"name":"ownedFee","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_i","type":"uint256"},{"name":"_sponsorAddr","type":"address"}],"name":"getSponsorBalance","outputs":[{"name":"sponsorBalance","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_questionID","type":"uint256"},{"name":"_site","type":"string"}],"name":"handleQuestion","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_i","type":"uint256"}],"name":"increaseBounty","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"contractBalance","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"_questionID","type":"uint256"},{"name":"_site","type":"string"}],"name":"getAddressOfQuestion","outputs":[{"name":"questionAddr","type":"address"}],"type":"function"},{"constant":true,"inputs":[{"name":"_i","type":"uint256"}],"name":"getSponsors","outputs":[{"name":"sponsorList","type":"address[]"}],"type":"function"},{"inputs":[],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"questionAddr","type":"address"}],"name":"QuestionAdded","type":"event"},{"anonymous":false,"inputs":[],"name":"BountyIncreased","type":"event"},{"anonymous":false,"inputs":[],"name":"BountyPaid","type":"event"}];
     var nameregABI = [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"name","outputs":[{"name":"o_name","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"bytes32"}],"name":"content","outputs":[{"name":"","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"bytes32"}],"name":"addr","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"}],"name":"reserve","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"bytes32"}],"name":"subRegistrar","outputs":[{"name":"o_subRegistrar","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"},{"name":"_newOwner","type":"address"}],"name":"transfer","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"},{"name":"_registrar","type":"address"}],"name":"setSubRegistrar","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"Registrar","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"},{"name":"_a","type":"address"},{"name":"_primary","type":"bool"}],"name":"setAddress","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"},{"name":"_content","type":"bytes32"}],"name":"setContent","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"bytes32"}],"name":"disown","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_name","type":"bytes32"}],"name":"register","outputs":[{"name":"","type":"address"}],"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"name","type":"bytes32"}],"name":"Changed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"name","type":"bytes32"},{"indexed":true,"name":"addr","type":"address"}],"name":"PrimaryChanged","type":"event"}];
@@ -26,17 +35,17 @@
     var questionsBalance = [];
     var questionDate = [];
 
-    $( document ).ready(function() {
-        $('#connected, #notconnected').hide();
-        $('#contractAddr').val(contractDefaultAddr);
-        connectToNode(handleConnection);
 
-        setTimeout( function() {
-            $('' + list.slice(0, -1) + '').on('click', function() {
-                $('#nodeIP').val(nodeList[$(this).text()]);
-            });
-        }, 500);
-    });
+    $('#connected, #notconnected').hide();
+    $('#nodeIP').val(nodeList[defaultNode]);
+    $('#contractAddr').val(contractDefaultAddr);
+    connectToNode(handleConnection);
+
+    setTimeout( function() {
+        $('' + list.slice(0, -1) + '').on('click', function() {
+            $('#nodeIP').val(nodeList[$(this).text()]);
+        });
+    }, 500);
 
     $('#submitNodeIP').on('click', function() {
         connectToNode(handleConnection);
@@ -209,7 +218,7 @@
         else {
             $('#toastm').show();
             $('#toastm').addClass('animated fadeIn');
-            $('#content_title').show();
+                $('#content_title').show();
             $('#loadingQuestion').hide();
             $('#content_title').addClass('animated fadeIn');
             $('#addNewQuestionBtn').show();
@@ -368,13 +377,13 @@
 
             if(question_start!= 0 || i==0 && order_type==false){
                 reArrangeQuestions(0);
-                $("#orderbt").attr('onClick','reArrangeQuestions(1);');
+                $("#orderbt").unbind('click').click(reArrangeQuestions.bind(null, 1));
                 $("#order_type").html("Order by date");
             } else if(order_type==true){
                 $("[id^=questionList_n]").each(function(a){
                     $(this).show();
                 });
-                $("#orderbt").attr('onClick','reArrangeQuestions(0);');
+                $("#orderbt").unbind('click').click(reArrangeQuestions.bind(null, 0));
                 $("#order_type").html("Order by bounty amount");
             }
 
@@ -412,7 +421,7 @@
             $.each( questionsBalance, function( index, value ){
                 newContent += $('#questionList_n'+value.substr(0,value.indexOf("@")))[0].outerHTML;
             });
-            $("#orderbt").attr('onClick','reArrangeQuestions(1);');
+            $("#orderbt").click(reArrangeQuestions.bind(null, 1));
             $("#order_type").html("Order by date");
         } else if(type==1){
             questionDate = questionDate.sort(function(a, b){
@@ -423,7 +432,7 @@
                 newContent += $('#questionList_n'+value.substr(0,value.indexOf("@")))[0].outerHTML;
             });
 
-            $("#orderbt").attr('onClick','reArrangeQuestions(0);');
+            $("#orderbt").click(reArrangeQuestions.bind(null, 0));
             $("#order_type").html("Order by bounty amount");
         }
         $('#questionList').html(newContent);
@@ -677,3 +686,4 @@
         $('#content').hide();
         $('#initiald').show();
     }
+});

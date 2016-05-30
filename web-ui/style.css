@@ -1,0 +1,98 @@
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.fright {
+    float: right;
+}
+
+.fleft {
+    float: left;
+}
+
+.show {
+    display: initial !important;
+}
+
+.alert-info {
+    background-color: #949EFF !important;
+    border: 1px solid #6674FF;
+}
+
+.alert-success {
+    border: 1px solid #398A3D;
+}
+
+.b {
+    text-decoration: underline;
+}
+
+#bback > a:hover {
+    border-bottom: 1px solid #0a6ebd !important;
+}
+
+.extra {
+    font-size: 1.15em;
+    font-weight: 500;
+}
+
+.bg {
+    font-size: 1.2em;
+}
+
+.seemore {
+    text-transform: uppercase;
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    text-align: -webkit-left;
+    margin-top: 28px;
+}
+
+.rounded {
+    background-color: #6F86FF;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+    padding: 4px 8px 4px 12px;
+    color: #FFF;
+}
+
+.playedit {
+    font-size: 2em;
+    vertical-align: middle;
+    float: right;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    right: 5px;
+    margin-top: 14px;
+}
+
+.iconsite {
+    text-align: center;
+    position: absolute;
+}
+
+.siteb {
+    color: #909090;
+}
+
+.box_all_ans {
+    background-color: #E2E2E2;
+    font-size: 1.25em;
+    vertical-align: middle;
+    height: 45px;
+}

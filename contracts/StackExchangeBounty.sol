@@ -1,5 +1,4 @@
-import "oraclizeAPI.sol";
-
+import "lib/oraclizeAPI.sol";
 
 contract StackExchangeBountyAddress is abstract {
     address main;
@@ -24,7 +23,7 @@ contract StackExchangeBountyAddress is abstract {
 }
 
 
-contract StackExchangeBounty is usingOraclize {
+contract StackExchangeBounty is usingOraclize, named("StackExchangeBounty") {
 
     // only for debug purpose
     address owner;
@@ -63,9 +62,7 @@ contract StackExchangeBounty is usingOraclize {
     }
     mapping(bytes32 => QueryInfo) queryInfo;
 
-    event QuestionAdded (
-            address questionAddr
-        );
+    event QuestionAdded(uint index);
 
     event BountyIncreased();
 
@@ -77,7 +74,7 @@ contract StackExchangeBounty is usingOraclize {
     function StackExchangeBounty() {
 
         // **************** SET NETWORK *************************
-                oraclize_setNetwork(networkID_testnet);
+                oraclize_setNetwork(networkID_consensys);
         // **************** SET NETWORK *************************
 
         // only for debug purpose
@@ -132,6 +129,7 @@ contract StackExchangeBounty is usingOraclize {
             questions.length++;
             numQuestions = questions.length;
             increaseBounty(i);
+            log0('not found');
             queryOraclize(
                 0,
                 _questionID,
@@ -141,6 +139,7 @@ contract StackExchangeBounty is usingOraclize {
             );
         }
         else {
+            log0('found');
             increaseBounty(i);
         }
     }
@@ -164,7 +163,7 @@ contract StackExchangeBounty is usingOraclize {
                 questions[i].expiryDate = DEF_EXPIRY_DATE;
                 questions[i].contractAddress =
                     new StackExchangeBountyAddress(questionID, site, i);
-                QuestionAdded(questions[i].contractAddress);
+                QuestionAdded(i);
                 queryOraclize(
                     0,
                     questionID,
@@ -208,6 +207,7 @@ contract StackExchangeBounty is usingOraclize {
             }
         }
         else {
+            log1('result', bytes32(bytes(result).length));
             if (bytes(result).length > 0 && bytes(result).length == 42) {
                 questions[i].winnerAddress = parseAddr(result);
                 fullfillContract(questionID, site, i);
