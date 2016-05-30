@@ -13,7 +13,6 @@ var QuestionsList = {
     }).bind(this));
     this.app.contract.contract.BountyPaid((function(err, result) {
       var $question = this.$list.find('[data-index=' + result.args.index.toNumber() + ']');
-      console.log($question);
       $question.find('[data-name=text]').text('Status:');
       $question.find('[data-name=info]').text('Completed');
     }).bind(this));
