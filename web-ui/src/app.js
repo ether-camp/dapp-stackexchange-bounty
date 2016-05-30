@@ -6,7 +6,7 @@ var Help = require('./ui/help');
 var QuestionsList = require('./ui/questions-list');
 var AddQuestion = require('./ui/add-question');
 
-var sandboxId = '50cbac27c6';
+var sandboxId = '7911be5d33';
 var url = '//' + window.location.hostname + ':8555/sandbox/' + sandboxId;
 
 //var nameRegAddress = '0x084f6a99003dae6d3906664fdbf43dd09930d0e3'; // livenet

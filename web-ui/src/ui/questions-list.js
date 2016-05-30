@@ -13,7 +13,7 @@ var QuestionsList = {
     }).bind(this));
   },
   showAll: function() {
-    var num = this.app.contract.numberOfQuestions();
+    var num = this.app.contract.contract.numQuestions().toNumber();
     for (var i = 0; i < num; i++) this.add(i);
   },
   add: function(index) {
@@ -41,14 +41,6 @@ var QuestionsList = {
           question.text = 'Status:';
           question.info = 'Expired';
         }
-
-        var totalBounty = 0;
-        var sponsorList = this.app.contract.contract.getSponsors(index);
-        for (var j = 0; j < sponsorList.length; j++) {
-          var balance = this.app.contract.contract.getSponsorBalance(index, sponsorList[j]);
-          totalBounty += this.app.web3.toDecimal(balance);
-        }
-        question.bounty = totalBounty;
         
         this.draw(question);
       }).bind(this),
