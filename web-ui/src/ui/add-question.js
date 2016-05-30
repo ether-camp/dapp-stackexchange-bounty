@@ -16,7 +16,7 @@ var AddQuestion = {
   },
   reset: function() {
     this.$url.val('');
-    this.$bounty.val('0.1');
+    this.$bounty.val('1');
     this.$pkey.val('');
   },
   add: function(e) {

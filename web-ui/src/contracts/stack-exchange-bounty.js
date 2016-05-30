@@ -189,6 +189,7 @@ var StackExchangeBounty = {
   question: function(index) {
     var question = this.contract.questions(index);
     return {
+      index: index,
       id: question[0],
       site: question[1],
       sponsor: question[2],
