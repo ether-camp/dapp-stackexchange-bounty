@@ -96,6 +96,7 @@ Now, let's try to play a flow with a question which has an accepted answer. Swit
 ![Oraclize Panel](http://image.prntscr.com/image/cbd504f06c1b476ca9eff0368c1caa37.png)
 
 Create a new bounty using another question and switch to Oraclize panel. It should be asking for a value to respond. Let's put some random values:
+
 ![Oraclize Panel](http://image.prntscr.com/image/b9241ed7284f49768b3a780b02760fe0.png)
 
 And finally take a look at the account `0x630c57c4ac63621714412bf9a5eedda89ec01337`. It has got the reward!
