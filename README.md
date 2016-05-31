@@ -71,7 +71,7 @@ We are ready to start the web-app:
 It should be available on URL https://[your_username].by.ether.camp:8080.
 
 Let's add a new bounty for a question: 
-![New Question](http://prntscr.com/bakbww)
+![New Question](http://image.prntscr.com/image/2d242d1bc72c4f4dac873b87ca245d2d.png)
 
 You can use `cow` as a private key, we defined the account in `ethereum.json`:
 ```
@@ -88,15 +88,15 @@ You can use `cow` as a private key, we defined the account in `ethereum.json`:
 ```
 
 Click "Add" and switch to Oraclize panel in your IDE:
-![Oraclize Panel](http://prntscr.com/bakd8u)
+![Oraclize Panel](http://image.prntscr.com/image/2f2b9e4930034c4ea310ce4321ef931b.png)
 
 `StackExchangeBounty` asked for the question's creation date and for accepted answer. There is not accepted anwer for the question yet. So, the contract has scheduled a new call in a day.
 
 Now, let's try to play a flow with a question which has an accepted answer. Switch oraclize to manual mode:
-![Oraclize Panel](http://prntscr.com/bakfa1)
+![Oraclize Panel](http://image.prntscr.com/image/cbd504f06c1b476ca9eff0368c1caa37.png)
 
 Create a new bounty using another question and switch to Oraclize panel. It should be asking for a value to respond. Let's put some random values:
-![Oraclize Panel](http://prntscr.com/bakhdw)
+![Oraclize Panel](http://image.prntscr.com/image/b9241ed7284f49768b3a780b02760fe0.png)
 
 And finally take a look at the account `0x630c57c4ac63621714412bf9a5eedda89ec01337`. It has got the reward!
 
